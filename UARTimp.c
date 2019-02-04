@@ -18,8 +18,18 @@ void uart_transmit(unsigned char data){
 	while(!(UCSR0A & ( 1 << UDRE0)));
 	UDR0 = data;
 }
+void printstr(unsigned char * str){
+	for(int i = 0; i < strlen(str); i ++){
+		uart_transmit(str[i]);
+	}
+}
+void printInt(int integer){
+	char num[16];
+	itoa(integer,num,10);
+	printstr(num);
+}
 
-char uart_receive(){
+unsigned  char uart_receive(){
 	while(!(UCSR0A & ( 1 << RXC0)));
 	return UDR0;
 }

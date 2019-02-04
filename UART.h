@@ -16,8 +16,10 @@
 void uart_init();
 
 void uart_transmit(unsigned char data);
+void printstr(unsigned char * str);
+void printInt(int integer);
 
-char uart_receive();
+unsigned  char uart_receive();
 
 
 #endif /* UART_H_ */

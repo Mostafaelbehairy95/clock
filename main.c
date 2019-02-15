@@ -46,8 +46,8 @@ int main(void)
 	analog_Init();
 	//?????????????????????????????????????????????????????????????????????????
 	////Set time
-	//t.hour = 3; 
-	//t.min = 37;
+	//t.hour = 7; 
+	//t.min = 47;
 	//t.sec = 0;
 	//t.date = 15;
 	//t.month = 2;
@@ -90,6 +90,7 @@ int main(void)
 		if(button >= 0 && button < 10){
 			updateScreen(pointer);
 			while(1){
+				RTC_ReadDataTime(&t);
 				for(int i = 0; i < 5; i ++){
 					setClock(t.hour,t.min);
 				}				
@@ -126,9 +127,13 @@ int main(void)
 					lcd4bitInt(t.month);
 					lcd4Bitdata('/');
 					lcd4bitInt(t.year + 2000);
-					lcd4BitIns(LINE_ONE + 14);
-					lcd4BitStr("AM");			
-					
+					if(t.AmPm && t.Mode12_24){
+						lcd4BitIns(LINE_ONE +14);
+						lcd4BitStr("PM");
+					}else if(!t.AmPm && t.Mode12_24){
+						lcd4BitIns(LINE_ONE +14);	
+						lcd4BitStr("AM");
+					}
 					break;
 				}		
 			}

@@ -85,15 +85,14 @@ int main(void)
 			lcd4BitIns(LINE_ONE + 14);
 			lcd4BitStr("AM");			
 		}
-		lcd4BitIns(LINE_ONE + 10);
-		lcd4BitStr("   ");
-		lcd4BitIns(LINE_ONE + 10);
-		lcd4bitInt(t.sec);
+		//Menu Button Contoll
 		button = readAnalog(3);
 		if(button >= 0 && button < 10){
 			updateScreen(pointer);
 			while(1){
-				_delay_ms(50);
+				for(int i = 0; i < 5; i ++){
+					setClock(t.hour,t.min);
+				}				
 				button = readAnalog(3);
 				if(button > 900 && button <= 1023){
 					pressed = 0;
@@ -120,6 +119,16 @@ int main(void)
 					pressed = 1;
 				}else if(button > 800 && button < 900 && !pressed){// back
 					pressed = 1;
+					lcd4BitIns(LCD_CLEAR);
+					_delay_ms(10);
+					lcd4bitInt(t.date);
+					lcd4Bitdata('/');
+					lcd4bitInt(t.month);
+					lcd4Bitdata('/');
+					lcd4bitInt(t.year + 2000);
+					lcd4BitIns(LINE_ONE + 14);
+					lcd4BitStr("AM");			
+					
 					break;
 				}		
 			}
